@@ -35,11 +35,11 @@ const Dashboard = () => {
         visitService.getAll()
       ]);
 
-      const today = new Date().toISOString().split('T')[0];
-      const todayAppts = appointments.filter(apt => apt.date === today);
-      const availableBeds = beds.filter(bed => bed.status === "Available");
+const today = new Date().toISOString().split('T')[0];
+      const todayAppts = appointments.filter(apt => apt.date_c === today);
+      const availableBeds = beds.filter(bed => bed.status_c === "Available");
       const activeVisits = visits.filter(visit => 
-        visit.status === "In Progress" || visit.status === "Critical"
+        visit.status_c === "In Progress" || visit.status_c === "Critical"
       );
 
       setStats({
@@ -153,16 +153,16 @@ const Dashboard = () => {
                         <ApperIcon name="User" size={16} className="text-primary" />
                       </div>
                       <div>
-                        <p className="font-medium text-gray-900">{appointment.patientName}</p>
-                        <p className="text-sm text-gray-600">{appointment.doctorName}</p>
-                        <p className="text-xs text-gray-500">{appointment.reason}</p>
+<p className="font-medium text-gray-900">{appointment.patient_name_c}</p>
+                        <p className="text-sm text-gray-600">{appointment.doctor_name_c}</p>
+                        <p className="text-xs text-gray-500">{appointment.reason_c}</p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <Badge variant={getAppointmentStatusColor(appointment.status)}>
-                        {appointment.status}
+<Badge variant={getAppointmentStatusColor(appointment.status_c)}>
+                        {appointment.status_c}
                       </Badge>
-                      <p className="text-sm text-gray-600 mt-1">{appointment.time}</p>
+                      <p className="text-sm text-gray-600 mt-1">{appointment.time_c}</p>
                     </div>
                   </div>
                 ))}
@@ -190,27 +190,27 @@ const Dashboard = () => {
                 {recentVisits.map((visit) => (
                   <div key={visit.Id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                     <div className="flex items-center space-x-3">
-                      <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                        visit.status === 'Critical' ? 'bg-gradient-to-br from-error/10 to-red-100' : 'bg-gradient-to-br from-warning/10 to-yellow-100'
+<div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                        visit.status_c === 'Critical' ? 'bg-gradient-to-br from-error/10 to-red-100' : 'bg-gradient-to-br from-warning/10 to-yellow-100'
                       }`}>
                         <ApperIcon 
-                          name={visit.status === 'Critical' ? 'AlertCircle' : 'Clock'} 
+                          name={visit.status_c === 'Critical' ? 'AlertCircle' : 'Clock'} 
                           size={16} 
-                          className={visit.status === 'Critical' ? 'text-error' : 'text-warning'} 
+                          className={visit.status_c === 'Critical' ? 'text-error' : 'text-warning'} 
                         />
                       </div>
                       <div>
-                        <p className="font-medium text-gray-900">{visit.patientName}</p>
-                        <p className="text-sm text-gray-600">{visit.department}</p>
-                        <p className="text-xs text-gray-500">{visit.reason}</p>
+                        <p className="font-medium text-gray-900">{visit.patient_name_c}</p>
+                        <p className="text-sm text-gray-600">{visit.department_c}</p>
+                        <p className="text-xs text-gray-500">{visit.reason_c}</p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <Badge variant={getVisitStatusColor(visit.status)}>
-                        {visit.status}
+<Badge variant={getVisitStatusColor(visit.status_c)}>
+                        {visit.status_c}
                       </Badge>
                       <p className="text-sm text-gray-600 mt-1">
-                        {format(new Date(visit.checkInTime), 'HH:mm')}
+                        {format(new Date(visit.check_in_time_c), 'HH:mm')}
                       </p>
                     </div>
                   </div>

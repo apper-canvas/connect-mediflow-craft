@@ -27,7 +27,7 @@ const PatientDetail = () => {
       setError("");
       
       const [patientData, appointmentData, visitData] = await Promise.all([
-        patientService.getById(id),
+patientService.getById(id),
         appointmentService.getByPatientId(`PAT${String(id).padStart(3, '0')}`),
         visitService.getByPatientId(`PAT${String(id).padStart(3, '0')}`)
       ]);
@@ -59,14 +59,14 @@ const PatientDetail = () => {
   const handleCheckIn = async () => {
     try {
       await visitService.create({
-        patientId: patient.patientId,
-        patientName: patient.name,
-        department: "General Medicine",
-        reason: "Walk-in visit",
-        attendingDoctor: "Dr. Smith",
-        diagnosis: "Pending",
-        prescription: "Pending",
-        billAmount: 0
+patient_id_c: patient.patient_id_c,
+        patient_name_c: patient.name_c,
+        department_c: "General Medicine",
+        reason_c: "Walk-in visit",
+        attending_doctor_c: "Dr. Smith",
+        diagnosis_c: "Pending",
+        prescription_c: "Pending",
+        bill_amount_c: 0
       });
       toast.success("Patient checked in successfully!");
       loadPatientData();
@@ -119,11 +119,11 @@ const PatientDetail = () => {
             className="p-2"
           />
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">{patient.name}</h1>
-            <p className="text-gray-600">Patient ID: {patient.patientId}</p>
+<h1 className="text-3xl font-bold text-gray-900">{patient.name_c}</h1>
+            <p className="text-gray-600">Patient ID: {patient.patient_id_c}</p>
           </div>
-          <Badge variant={getStatusColor(patient.status)}>
-            {patient.status}
+<Badge variant={getStatusColor(patient.status_c)}>
+            {patient.status_c}
           </Badge>
         </div>
         <div className="flex space-x-3">
@@ -150,34 +150,37 @@ const PatientDetail = () => {
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
                 <span className="text-gray-500">Age</span>
-                <p className="font-medium">{patient.age} years</p>
+<p className="font-medium">{patient.age_c} years</p>
               </div>
               <div>
                 <span className="text-gray-500">Gender</span>
-                <p className="font-medium">{patient.gender}</p>
+                <p className="font-medium">{patient.gender_c}</p>
               </div>
               <div>
                 <span className="text-gray-500">Blood Group</span>
-                <p className="font-medium text-error">{patient.bloodGroup}</p>
+                <p className="font-medium text-error">{patient.blood_group_c}</p>
               </div>
               <div>
                 <span className="text-gray-500">Registration</span>
                 <p className="font-medium">
-                  {format(new Date(patient.registrationDate), 'MMM dd, yyyy')}
+                  {format(new Date(patient.registration_date_c), 'MMM dd, yyyy')}
                 </p>
               </div>
             </div>
             
             <div className="pt-4 border-t border-gray-200">
               <span className="text-gray-500 text-sm">Phone</span>
-              <p className="font-medium">{patient.phone}</p>
+<p className="font-medium">{patient.phone_c}</p>
             </div>
             
             <div>
-              <span className="text-gray-500 text-sm">Email</span>
-              <p className="font-medium">{patient.email}</p>
+<span className="text-gray-500 text-sm">Email</span>
+              <p className="font-medium">{patient.email_c}</p>
             </div>
-            
+            <div className="col-span-2">
+              <span className="text-gray-500 text-sm">Address</span>
+              <p className="font-medium">{patient.address_c}</p>
+            </div>
             <div>
               <span className="text-gray-500 text-sm">Address</span>
               <p className="font-medium text-sm">{patient.address}</p>
@@ -197,18 +200,18 @@ const PatientDetail = () => {
             <div>
               <span className="text-gray-500 text-sm">Medical History</span>
               <p className="font-medium text-sm">
-                {patient.medicalHistory || "No medical history recorded"}
+{patient.medical_history_c || "No medical history recorded"}
               </p>
             </div>
             
-            {patient.allergies && patient.allergies.length > 0 && (
+{patient.allergies_c && (
               <div>
                 <span className="text-gray-500 text-sm">Allergies</span>
                 <div className="flex flex-wrap gap-2 mt-2">
-                  {patient.allergies.map((allergy, index) => (
+                  {patient.allergies_c.split(',').map((allergy, index) => (
                     <Badge key={index} variant="warning" className="flex items-center space-x-1">
                       <ApperIcon name="AlertTriangle" size={12} />
-                      <span>{allergy}</span>
+                      <span>{allergy.trim()}</span>
                     </Badge>
                   ))}
                 </div>
@@ -217,14 +220,14 @@ const PatientDetail = () => {
 
             <div className="pt-4 border-t border-gray-200">
               <span className="text-gray-500 text-sm">Total Visits</span>
-              <p className="font-medium">{patient.totalVisits || 0}</p>
+<p className="font-medium">{patient.total_visits_c || 0}</p>
             </div>
 
             <div>
               <span className="text-gray-500 text-sm">Last Visit</span>
-              <p className="font-medium">
-                {patient.lastVisit 
-                  ? format(new Date(patient.lastVisit), 'MMM dd, yyyy') 
+<p className="font-medium">
+                {patient.last_visit_c 
+                  ? format(new Date(patient.last_visit_c), 'MMM dd, yyyy') 
                   : "No visits recorded"
                 }
               </p>
@@ -241,19 +244,19 @@ const PatientDetail = () => {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            {patient.emergencyContact ? (
+{patient.emergency_contact_name_c ? (
               <>
                 <div>
                   <span className="text-gray-500 text-sm">Name</span>
-                  <p className="font-medium">{patient.emergencyContact.name}</p>
+                  <p className="font-medium">{patient.emergency_contact_name_c}</p>
                 </div>
                 <div>
                   <span className="text-gray-500 text-sm">Relationship</span>
-                  <p className="font-medium">{patient.emergencyContact.relation}</p>
+                  <p className="font-medium">{patient.emergency_contact_relation_c}</p>
                 </div>
                 <div>
                   <span className="text-gray-500 text-sm">Phone</span>
-                  <p className="font-medium">{patient.emergencyContact.phone}</p>
+                  <p className="font-medium">{patient.emergency_contact_phone_c}</p>
                 </div>
                 <Button variant="outline" className="w-full mt-4" icon="Phone">
                   Call Emergency Contact
@@ -288,16 +291,16 @@ const PatientDetail = () => {
             ) : (
               <div className="space-y-4">
                 {appointments.slice(0, 5).map((appointment) => (
-                  <div key={appointment.Id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+<div key={appointment.Id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                     <div>
-                      <p className="font-medium text-sm">{appointment.reason}</p>
+                      <p className="font-medium text-sm">{appointment.reason_c}</p>
                       <p className="text-xs text-gray-600">
-                        {format(new Date(appointment.date), 'MMM dd, yyyy')} at {appointment.time}
+                        {format(new Date(appointment.date_c), 'MMM dd, yyyy')} at {appointment.time_c}
                       </p>
-                      <p className="text-xs text-gray-500">{appointment.doctorName}</p>
+                      <p className="text-xs text-gray-500">{appointment.doctor_name_c}</p>
                     </div>
-                    <Badge variant={getAppointmentStatusColor(appointment.status)}>
-                      {appointment.status}
+                    <Badge variant={getAppointmentStatusColor(appointment.status_c)}>
+                      {appointment.status_c}
                     </Badge>
                   </div>
                 ))}
@@ -323,23 +326,23 @@ const PatientDetail = () => {
             ) : (
               <div className="space-y-4">
                 {visits.slice(0, 5).map((visit) => (
-                  <div key={visit.Id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+<div key={visit.Id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                     <div>
-                      <p className="font-medium text-sm">{visit.reason}</p>
+                      <p className="font-medium text-sm">{visit.reason_c}</p>
                       <p className="text-xs text-gray-600">
-                        {format(new Date(visit.checkInTime), 'MMM dd, yyyy HH:mm')}
+                        {format(new Date(visit.check_in_time_c), 'MMM dd, yyyy HH:mm')}
                       </p>
-                      <p className="text-xs text-gray-500">{visit.department}</p>
-                      {visit.diagnosis && visit.diagnosis !== "Pending" && (
-                        <p className="text-xs text-gray-700 mt-1">{visit.diagnosis}</p>
+                      <p className="text-xs text-gray-500">{visit.department_c}</p>
+                      {visit.diagnosis_c && visit.diagnosis_c !== "Pending" && (
+                        <p className="text-xs text-gray-700 mt-1">{visit.diagnosis_c}</p>
                       )}
                     </div>
                     <div className="text-right">
-                      <Badge variant={getVisitStatusColor(visit.status)}>
-                        {visit.status}
+                      <Badge variant={getVisitStatusColor(visit.status_c)}>
+                        {visit.status_c}
                       </Badge>
                       <p className="text-xs text-gray-500 mt-1">
-                        ${visit.billAmount?.toFixed(2) || '0.00'}
+                        ${visit.bill_amount_c?.toFixed(2) || '0.00'}
                       </p>
                     </div>
                   </div>

@@ -1,88 +1,307 @@
-import bedsData from "@/services/mockData/beds.json";
+import { getApperClient } from "@/services/apperClient";
+import { toast } from "react-toastify";
+import React from "react";
 
 class BedService {
   constructor() {
-    this.beds = [...bedsData];
+    this.tableName = "bed_c";
   }
 
   async getAll() {
-    await this.delay(300);
-    return [...this.beds];
+    try {
+      const apperClient = getApperClient();
+      const response = await apperClient.fetchRecords(this.tableName, {
+        fields: [
+          {"field": {"Name": "bed_id_c"}},
+          {"field": {"Name": "number_c"}},
+          {"field": {"Name": "ward_c"}},
+          {"field": {"Name": "floor_c"}},
+          {"field": {"Name": "type_c"}},
+          {"field": {"Name": "status_c"}},
+          {"field": {"Name": "patient_id_c"}},
+          {"field": {"Name": "patient_name_c"}},
+          {"field": {"Name": "assigned_date_c"}},
+          {"field": {"Name": "estimated_discharge_c"}}
+        ]
+      });
+
+      if (!response.success) {
+        console.error(response.message);
+        toast.error(response.message);
+        return [];
+      }
+
+      return response.data || [];
+    } catch (error) {
+      console.error("Error fetching beds:", error?.response?.data?.message || error);
+      toast.error("Failed to fetch beds");
+      return [];
+    }
   }
 
   async getById(id) {
-    await this.delay(200);
-    const bed = this.beds.find(b => b.Id === parseInt(id));
-    return bed ? { ...bed } : null;
+    try {
+      const apperClient = getApperClient();
+      const response = await apperClient.getRecordById(this.tableName, parseInt(id), {
+        fields: [
+          {"field": {"Name": "bed_id_c"}},
+          {"field": {"Name": "number_c"}},
+          {"field": {"Name": "ward_c"}},
+          {"field": {"Name": "floor_c"}},
+          {"field": {"Name": "type_c"}},
+          {"field": {"Name": "status_c"}},
+          {"field": {"Name": "patient_id_c"}},
+          {"field": {"Name": "patient_name_c"}},
+          {"field": {"Name": "assigned_date_c"}},
+          {"field": {"Name": "estimated_discharge_c"}}
+        ]
+      });
+
+      if (!response.success) {
+        console.error(response.message);
+        return null;
+      }
+
+      return response.data;
+    } catch (error) {
+      console.error(`Error fetching bed ${id}:`, error?.response?.data?.message || error);
+      return null;
+    }
   }
 
   async getByWard(ward) {
-    await this.delay(250);
-    return this.beds.filter(bed => 
-      bed.ward.toLowerCase() === ward.toLowerCase()
-    );
+    try {
+      const apperClient = getApperClient();
+      const response = await apperClient.fetchRecords(this.tableName, {
+        fields: [
+          {"field": {"Name": "bed_id_c"}},
+          {"field": {"Name": "number_c"}},
+          {"field": {"Name": "ward_c"}},
+          {"field": {"Name": "floor_c"}},
+          {"field": {"Name": "type_c"}},
+          {"field": {"Name": "status_c"}},
+          {"field": {"Name": "patient_name_c"}}
+        ],
+        where: [{
+          "FieldName": "ward_c",
+          "Operator": "EqualTo",
+          "Values": [ward]
+        }]
+      });
+
+      if (!response.success) {
+        console.error(response.message);
+        return [];
+      }
+
+      return response.data || [];
+    } catch (error) {
+      console.error("Error fetching beds by ward:", error?.response?.data?.message || error);
+      return [];
+    }
   }
 
   async getAvailable() {
-    await this.delay(200);
-    return this.beds.filter(bed => 
-      bed.status === "Available"
-    );
+    try {
+      const apperClient = getApperClient();
+      const response = await apperClient.fetchRecords(this.tableName, {
+        fields: [
+          {"field": {"Name": "bed_id_c"}},
+          {"field": {"Name": "number_c"}},
+          {"field": {"Name": "ward_c"}},
+          {"field": {"Name": "floor_c"}},
+          {"field": {"Name": "type_c"}},
+          {"field": {"Name": "status_c"}}
+        ],
+        where: [{
+          "FieldName": "status_c",
+          "Operator": "EqualTo",
+          "Values": ["Available"]
+        }]
+      });
+
+      if (!response.success) {
+        console.error(response.message);
+        return [];
+      }
+
+      return response.data || [];
+    } catch (error) {
+      console.error("Error fetching available beds:", error?.response?.data?.message || error);
+      return [];
+    }
   }
 
   async getOccupied() {
-    await this.delay(200);
-    return this.beds.filter(bed => 
-      bed.status === "Occupied"
-    );
+    try {
+      const apperClient = getApperClient();
+      const response = await apperClient.fetchRecords(this.tableName, {
+        fields: [
+          {"field": {"Name": "bed_id_c"}},
+          {"field": {"Name": "number_c"}},
+          {"field": {"Name": "ward_c"}},
+          {"field": {"Name": "patient_name_c"}},
+          {"field": {"Name": "status_c"}}
+        ],
+        where: [{
+          "FieldName": "status_c",
+          "Operator": "EqualTo",
+          "Values": ["Occupied"]
+        }]
+      });
+
+      if (!response.success) {
+        console.error(response.message);
+        return [];
+      }
+
+      return response.data || [];
+    } catch (error) {
+      console.error("Error fetching occupied beds:", error?.response?.data?.message || error);
+      return [];
+    }
   }
 
   async assignPatient(bedId, patientId, patientName, estimatedDischarge) {
-    await this.delay(400);
-    const index = this.beds.findIndex(b => b.Id === parseInt(bedId));
-    if (index !== -1 && this.beds[index].status === "Available") {
-      this.beds[index] = {
-        ...this.beds[index],
-        status: "Occupied",
-        patientId,
-        patientName,
-        assignedDate: new Date().toISOString().split('T')[0],
-        estimatedDischarge
-      };
-      return { ...this.beds[index] };
+    try {
+      const apperClient = getApperClient();
+      const response = await apperClient.updateRecord(this.tableName, {
+        records: [{
+          Id: parseInt(bedId),
+          status_c: "Occupied",
+          patient_id_c: patientId,
+          patient_name_c: patientName,
+          assigned_date_c: new Date().toISOString().split('T')[0],
+          estimated_discharge_c: estimatedDischarge
+        }]
+      });
+
+      if (!response.success) {
+        console.error(response.message);
+        toast.error(response.message);
+        return null;
+      }
+
+      if (response.results) {
+        const successful = response.results.filter(r => r.success);
+        const failed = response.results.filter(r => !r.success);
+
+        if (failed.length > 0) {
+          console.error(`Failed to assign patient to bed:`, failed);
+          failed.forEach(record => {
+            if (record.message) toast.error(record.message);
+          });
+        }
+
+        if (successful.length > 0) {
+          toast.success("Patient assigned to bed successfully");
+          return successful[0].data;
+        }
+      }
+
+      return null;
+    } catch (error) {
+      console.error("Error assigning patient to bed:", error?.response?.data?.message || error);
+      toast.error("Failed to assign patient to bed");
+      return null;
     }
-    return null;
   }
 
   async dischargeBed(bedId) {
-    await this.delay(400);
-    const index = this.beds.findIndex(b => b.Id === parseInt(bedId));
-    if (index !== -1) {
-      this.beds[index] = {
-        ...this.beds[index],
-        status: "Available",
-        patientId: null,
-        patientName: null,
-        assignedDate: null,
-        estimatedDischarge: null
-      };
-      return { ...this.beds[index] };
+    try {
+      const apperClient = getApperClient();
+      const response = await apperClient.updateRecord(this.tableName, {
+        records: [{
+          Id: parseInt(bedId),
+          status_c: "Available",
+          patient_id_c: null,
+          patient_name_c: null,
+          assigned_date_c: null,
+          estimated_discharge_c: null
+        }]
+      });
+
+      if (!response.success) {
+        console.error(response.message);
+        toast.error(response.message);
+        return null;
+      }
+
+      if (response.results) {
+        const successful = response.results.filter(r => r.success);
+        const failed = response.results.filter(r => !r.success);
+
+        if (failed.length > 0) {
+          console.error(`Failed to discharge bed:`, failed);
+          failed.forEach(record => {
+            if (record.message) toast.error(record.message);
+          });
+        }
+
+        if (successful.length > 0) {
+          toast.success("Bed discharged successfully");
+          return successful[0].data;
+        }
+      }
+
+      return null;
+    } catch (error) {
+      console.error("Error discharging bed:", error?.response?.data?.message || error);
+      toast.error("Failed to discharge bed");
+      return null;
     }
-    return null;
   }
 
   async update(id, bedData) {
-    await this.delay(400);
-    const index = this.beds.findIndex(b => b.Id === parseInt(id));
-    if (index !== -1) {
-      this.beds[index] = { ...this.beds[index], ...bedData };
-      return { ...this.beds[index] };
-    }
-    return null;
-  }
+    try {
+      const apperClient = getApperClient();
+      const updateData = {
+        Id: parseInt(id)
+      };
 
-  delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+      if (bedData.number_c !== undefined) updateData.number_c = bedData.number_c;
+      if (bedData.ward_c !== undefined) updateData.ward_c = bedData.ward_c;
+      if (bedData.floor_c !== undefined) updateData.floor_c = bedData.floor_c;
+      if (bedData.type_c !== undefined) updateData.type_c = bedData.type_c;
+      if (bedData.status_c !== undefined) updateData.status_c = bedData.status_c;
+      if (bedData.patient_id_c !== undefined) updateData.patient_id_c = bedData.patient_id_c;
+      if (bedData.patient_name_c !== undefined) updateData.patient_name_c = bedData.patient_name_c;
+      if (bedData.assigned_date_c !== undefined) updateData.assigned_date_c = bedData.assigned_date_c;
+      if (bedData.estimated_discharge_c !== undefined) updateData.estimated_discharge_c = bedData.estimated_discharge_c;
+
+      const response = await apperClient.updateRecord(this.tableName, {
+        records: [updateData]
+      });
+
+      if (!response.success) {
+        console.error(response.message);
+        toast.error(response.message);
+        return null;
+      }
+
+      if (response.results) {
+        const successful = response.results.filter(r => r.success);
+        const failed = response.results.filter(r => !r.success);
+
+        if (failed.length > 0) {
+          console.error(`Failed to update ${failed.length} beds:`, failed);
+          failed.forEach(record => {
+            if (record.message) toast.error(record.message);
+          });
+        }
+
+        if (successful.length > 0) {
+          toast.success("Bed updated successfully");
+          return successful[0].data;
+        }
+      }
+
+      return null;
+    } catch (error) {
+      console.error("Error updating bed:", error?.response?.data?.message || error);
+      toast.error("Failed to update bed");
+      return null;
+    }
   }
 }
 

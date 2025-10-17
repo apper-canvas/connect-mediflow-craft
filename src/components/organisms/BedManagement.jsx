@@ -29,16 +29,16 @@ const BedManagement = () => {
     loadBeds();
   }, []);
 
-  const wards = [...new Set(beds.map(bed => bed.ward))];
+const wards = [...new Set(beds.map(bed => bed.ward_c))];
   
   const filteredBeds = selectedWard === "all" 
-    ? beds 
-    : beds.filter(bed => bed.ward === selectedWard);
+? beds 
+    : beds.filter(bed => bed.ward_c === selectedWard);
 
   const getWardStats = (wardName) => {
-    const wardBeds = beds.filter(bed => bed.ward === wardName);
-    const available = wardBeds.filter(bed => bed.status === "Available").length;
-    const occupied = wardBeds.filter(bed => bed.status === "Occupied").length;
+const wardBeds = beds.filter(bed => bed.ward_c === wardName);
+    const available = wardBeds.filter(bed => bed.status_c === "Available").length;
+    const occupied = wardBeds.filter(bed => bed.status_c === "Occupied").length;
     const total = wardBeds.length;
     return { available, occupied, total };
   };
@@ -48,8 +48,8 @@ const BedManagement = () => {
       value: "all", 
       label: "All Wards", 
       stats: { 
-        available: beds.filter(b => b.status === "Available").length,
-        occupied: beds.filter(b => b.status === "Occupied").length,
+available: beds.filter(b => b.status_c === "Available").length,
+        occupied: beds.filter(b => b.status_c === "Occupied").length,
         total: beds.length
       }
     },
@@ -116,7 +116,7 @@ const BedManagement = () => {
             <div>
               <p className="text-sm font-medium text-gray-600">Occupancy Rate</p>
               <p className="text-2xl font-bold text-primary">
-                {beds.length ? Math.round((beds.filter(b => b.status === "Occupied").length / beds.length) * 100) : 0}%
+{beds.length ? Math.round((beds.filter(b => b.status_c === "Occupied").length / beds.length) * 100) : 0}%
               </p>
             </div>
             <div className="w-12 h-12 bg-gradient-to-br from-info/10 to-blue-100 rounded-lg flex items-center justify-center">

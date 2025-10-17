@@ -1,12 +1,12 @@
 import React from "react";
 import { Card, CardContent } from "@/components/atoms/Card";
-import Badge from "@/components/atoms/Badge";
-import ApperIcon from "@/components/ApperIcon";
 import { format } from "date-fns";
+import ApperIcon from "@/components/ApperIcon";
+import Badge from "@/components/atoms/Badge";
 
 const PatientCard = ({ patient, onClick, showActions = true }) => {
   const getStatusColor = (status) => {
-    switch (status.toLowerCase()) {
+    switch (status?.toLowerCase()) {
       case 'active': return 'success';
       case 'inactive': return 'error';
       case 'pending': return 'warning';
@@ -23,12 +23,12 @@ const PatientCard = ({ patient, onClick, showActions = true }) => {
               <ApperIcon name="User" size={24} className="text-primary" />
             </div>
             <div>
-              <h3 className="font-semibold text-gray-900">{patient.name}</h3>
-              <p className="text-sm text-gray-500">{patient.patientId}</p>
+              <h3 className="font-semibold text-gray-900">{patient?.name || 'Unknown'}</h3>
+              <p className="text-sm text-gray-500">{patient?.patientId || 'N/A'}</p>
             </div>
           </div>
-          <Badge variant={getStatusColor(patient.status)}>
-            {patient.status}
+          <Badge variant={getStatusColor(patient?.status)}>
+            {patient?.status || 'Unknown'}
           </Badge>
         </div>
 
@@ -36,38 +36,40 @@ const PatientCard = ({ patient, onClick, showActions = true }) => {
           <div className="flex items-center space-x-2">
             <ApperIcon name="Calendar" size={16} className="text-gray-400" />
             <span className="text-gray-600">
-              Age: {patient.age}
+              Age: {patient?.age || 'N/A'}
             </span>
           </div>
           <div className="flex items-center space-x-2">
             <ApperIcon name="Phone" size={16} className="text-gray-400" />
             <span className="text-gray-600">
-              {patient.phone}
+              {patient?.phone || 'N/A'}
             </span>
           </div>
           <div className="flex items-center space-x-2">
             <ApperIcon name="Droplet" size={16} className="text-gray-400" />
             <span className="text-gray-600">
-              {patient.bloodGroup}
+              {patient?.bloodGroup || 'N/A'}
             </span>
           </div>
           <div className="flex items-center space-x-2">
             <ApperIcon name="Clock" size={16} className="text-gray-400" />
             <span className="text-gray-600">
-              {patient.lastVisit ? format(new Date(patient.lastVisit), 'MMM dd') : 'No visits'}
+              Last Visit: {patient?.lastVisit 
+                ? format(new Date(patient.lastVisit), 'MMM dd, yyyy')
+                : 'N/A'}
             </span>
           </div>
         </div>
 
-        {patient.allergies && patient.allergies.length > 0 && (
+        {patient?.allergies && patient.allergies.length > 0 && (
           <div className="mt-4 pt-4 border-t border-gray-200">
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 mb-2">
               <ApperIcon name="AlertTriangle" size={16} className="text-warning" />
               <span className="text-sm font-medium text-gray-700">Allergies:</span>
             </div>
-            <div className="mt-2 flex flex-wrap gap-1">
+            <div className="flex flex-wrap gap-2">
               {patient.allergies.map((allergy, index) => (
-                <Badge key={index} variant="warning" className="text-xs">
+                <Badge key={index} variant="warning" size="sm">
                   {allergy}
                 </Badge>
               ))}

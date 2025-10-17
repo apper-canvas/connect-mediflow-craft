@@ -30,16 +30,16 @@ const AppointmentList = () => {
     loadAppointments();
   }, []);
 
-  const filteredAppointments = appointments.filter(appointment => {
+const filteredAppointments = appointments.filter(appointment => {
     if (selectedFilter === "all") return true;
-    return appointment.status.toLowerCase() === selectedFilter.toLowerCase();
+    return appointment.status_c?.toLowerCase() === selectedFilter.toLowerCase();
   });
 
   const filterOptions = [
     { value: "all", label: "All", count: appointments.length },
-    { value: "scheduled", label: "Scheduled", count: appointments.filter(a => a.status === "Scheduled").length },
-    { value: "confirmed", label: "Confirmed", count: appointments.filter(a => a.status === "Confirmed").length },
-    { value: "completed", label: "Completed", count: appointments.filter(a => a.status === "Completed").length }
+{ value: "scheduled", label: "Scheduled", count: appointments.filter(a => a.status_c === "Scheduled").length },
+    { value: "confirmed", label: "Confirmed", count: appointments.filter(a => a.status_c === "Confirmed").length },
+    { value: "completed", label: "Completed", count: appointments.filter(a => a.status_c === "Completed").length }
   ];
 
   if (loading) return <Loading />;

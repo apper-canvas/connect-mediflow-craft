@@ -50,7 +50,7 @@ const PatientList = () => {
   };
 
   const handlePatientClick = (patient) => {
-    navigate(`/patients/${patient.Id}`);
+navigate(`/patients/${patient.Id}`);
   };
 
   if (loading) return <Loading />;

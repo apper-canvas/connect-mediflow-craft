@@ -33,21 +33,20 @@ const StaffDirectory = () => {
     loadDoctors();
   }, []);
 
-  const departments = [...new Set(doctors.map(doctor => doctor.department))];
-
+const departments = [...new Set(doctors.map(doctor => doctor.department_c))];
   const handleSearch = (term) => {
     let filtered = doctors;
     
     if (term.trim()) {
       filtered = filtered.filter(doctor => 
-        doctor.name.toLowerCase().includes(term.toLowerCase()) ||
-        doctor.specialization.toLowerCase().includes(term.toLowerCase()) ||
-        doctor.department.toLowerCase().includes(term.toLowerCase())
+doctor.name_c?.toLowerCase().includes(term.toLowerCase()) ||
+        doctor.specialization_c?.toLowerCase().includes(term.toLowerCase()) ||
+        doctor.department_c?.toLowerCase().includes(term.toLowerCase())
       );
     }
 
     if (selectedDepartment !== "all") {
-      filtered = filtered.filter(doctor => doctor.department === selectedDepartment);
+filtered = filtered.filter(doctor => doctor.department_c === selectedDepartment);
     }
 
     setFilteredDoctors(filtered);
@@ -58,7 +57,7 @@ const StaffDirectory = () => {
     let filtered = doctors;
 
     if (department !== "all") {
-      filtered = filtered.filter(doctor => doctor.department === department);
+filtered = filtered.filter(doctor => doctor.department_c === department);
     }
 
     setFilteredDoctors(filtered);
@@ -74,12 +73,12 @@ const StaffDirectory = () => {
     }
   };
 
-  const departmentOptions = [
+const departmentOptions = [
     { value: "all", label: "All Departments", count: doctors.length },
     ...departments.map(dept => ({
       value: dept,
       label: dept,
-      count: doctors.filter(d => d.department === dept).length
+      count: doctors.filter(d => d.department_c === dept).length
     }))
   ];
 
@@ -137,46 +136,46 @@ const StaffDirectory = () => {
                       <ApperIcon name="User" size={24} className="text-primary" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900">{doctor.name}</h3>
-                      <p className="text-sm text-gray-500">{doctor.doctorId}</p>
+<h3 className="font-semibold text-gray-900">{doctor.name_c}</h3>
+                      <p className="text-sm text-gray-500">{doctor.doctor_id_c}</p>
                     </div>
                   </div>
-                  <Badge variant={getStatusColor(doctor.status)}>
-                    {doctor.status}
+<Badge variant={getStatusColor(doctor.status_c)}>
+                    {doctor.status_c}
                   </Badge>
                 </div>
 
                 <div className="space-y-3 text-sm">
                   <div className="flex items-center space-x-2">
-                    <ApperIcon name="Stethoscope" size={16} className="text-gray-400" />
-                    <span className="text-gray-600">{doctor.specialization}</span>
+<ApperIcon name="Stethoscope" size={16} className="text-gray-400" />
+                    <span className="text-gray-600">{doctor.specialization_c}</span>
                   </div>
                   
                   <div className="flex items-center space-x-2">
-                    <ApperIcon name="Building2" size={16} className="text-gray-400" />
-                    <span className="text-gray-600">{doctor.department}</span>
+<ApperIcon name="Building2" size={16} className="text-gray-400" />
+                    <span className="text-gray-600">{doctor.department_c}</span>
                   </div>
 
                   <div className="flex items-center space-x-2">
-                    <ApperIcon name="Phone" size={16} className="text-gray-400" />
-                    <span className="text-gray-600">{doctor.phone}</span>
+<ApperIcon name="Phone" size={16} className="text-gray-400" />
+                    <span className="text-gray-600">{doctor.phone_c}</span>
                   </div>
 
                   <div className="flex items-center space-x-2">
-                    <ApperIcon name="Mail" size={16} className="text-gray-400" />
-                    <span className="text-gray-600">{doctor.email}</span>
+<ApperIcon name="Mail" size={16} className="text-gray-400" />
+                    <span className="text-gray-600">{doctor.email_c}</span>
                   </div>
 
                   <div className="flex items-center space-x-2">
                     <ApperIcon name="Users" size={16} className="text-gray-400" />
-                    <span className="text-gray-600">
-                      {doctor.currentPatients} current patients
+<span className="text-gray-600">
+                      {doctor.current_patients_c} current patients
                     </span>
                   </div>
 
                   <div className="flex items-center space-x-2">
-                    <ApperIcon name="Award" size={16} className="text-gray-400" />
-                    <span className="text-gray-600">{doctor.experience} experience</span>
+<ApperIcon name="Award" size={16} className="text-gray-400" />
+                    <span className="text-gray-600">{doctor.experience_c} experience</span>
                   </div>
                 </div>
 
