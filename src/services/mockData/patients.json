@@ -1,0 +1,178 @@
+[
+  {
+    "Id": 1,
+    "patientId": "PAT001",
+    "name": "Sarah Johnson",
+    "age": 34,
+    "gender": "Female",
+    "phone": "+1-555-0101",
+    "email": "sarah.johnson@email.com",
+    "address": "123 Maple Street, Springfield, IL 62701",
+    "bloodGroup": "O+",
+    "allergies": ["Penicillin", "Peanuts"],
+    "medicalHistory": "Diabetes Type 2, Hypertension",
+    "emergencyContact": {
+      "name": "John Johnson",
+      "relation": "Husband",
+      "phone": "+1-555-0102"
+    },
+    "registrationDate": "2024-01-15",
+    "status": "Active",
+    "lastVisit": "2024-12-10",
+    "totalVisits": 8
+  },
+  {
+    "Id": 2,
+    "patientId": "PAT002",
+    "name": "Michael Chen",
+    "age": 28,
+    "gender": "Male",
+    "phone": "+1-555-0201",
+    "email": "m.chen@email.com",
+    "address": "456 Oak Avenue, Springfield, IL 62702",
+    "bloodGroup": "A+",
+    "allergies": ["Shellfish"],
+    "medicalHistory": "Asthma",
+    "emergencyContact": {
+      "name": "Lisa Chen",
+      "relation": "Wife",
+      "phone": "+1-555-0202"
+    },
+    "registrationDate": "2024-02-20",
+    "status": "Active",
+    "lastVisit": "2024-12-08",
+    "totalVisits": 5
+  },
+  {
+    "Id": 3,
+    "patientId": "PAT003",
+    "name": "Emily Rodriguez",
+    "age": 45,
+    "gender": "Female",
+    "phone": "+1-555-0301",
+    "email": "emily.r@email.com",
+    "address": "789 Pine Road, Springfield, IL 62703",
+    "bloodGroup": "B+",
+    "allergies": [],
+    "medicalHistory": "Migraine, High Cholesterol",
+    "emergencyContact": {
+      "name": "Carlos Rodriguez",
+      "relation": "Brother",
+      "phone": "+1-555-0302"
+    },
+    "registrationDate": "2024-01-08",
+    "status": "Active",
+    "lastVisit": "2024-12-12",
+    "totalVisits": 12
+  },
+  {
+    "Id": 4,
+    "patientId": "PAT004",
+    "name": "David Thompson",
+    "age": 62,
+    "gender": "Male",
+    "phone": "+1-555-0401",
+    "email": "d.thompson@email.com",
+    "address": "321 Elm Street, Springfield, IL 62704",
+    "bloodGroup": "AB+",
+    "allergies": ["Latex"],
+    "medicalHistory": "Heart Disease, Arthritis",
+    "emergencyContact": {
+      "name": "Mary Thompson",
+      "relation": "Wife",
+      "phone": "+1-555-0402"
+    },
+    "registrationDate": "2023-11-15",
+    "status": "Active",
+    "lastVisit": "2024-12-05",
+    "totalVisits": 15
+  },
+  {
+    "Id": 5,
+    "patientId": "PAT005",
+    "name": "Jennifer Wilson",
+    "age": 39,
+    "gender": "Female",
+    "phone": "+1-555-0501",
+    "email": "j.wilson@email.com",
+    "address": "654 Cedar Lane, Springfield, IL 62705",
+    "bloodGroup": "O-",
+    "allergies": ["Ibuprofen"],
+    "medicalHistory": "Thyroid disorder",
+    "emergencyContact": {
+      "name": "Robert Wilson",
+      "relation": "Husband",
+      "phone": "+1-555-0502"
+    },
+    "registrationDate": "2024-03-10",
+    "status": "Active",
+    "lastVisit": "2024-12-11",
+    "totalVisits": 6
+  },
+  {
+    "Id": 6,
+    "patientId": "PAT006",
+    "name": "Robert Garcia",
+    "age": 55,
+    "gender": "Male",
+    "phone": "+1-555-0601",
+    "email": "r.garcia@email.com",
+    "address": "987 Birch Drive, Springfield, IL 62706",
+    "bloodGroup": "A-",
+    "allergies": ["Codeine"],
+    "medicalHistory": "Lower back pain, Sleep apnea",
+    "emergencyContact": {
+      "name": "Maria Garcia",
+      "relation": "Wife",
+      "phone": "+1-555-0602"
+    },
+    "registrationDate": "2024-01-22",
+    "status": "Active",
+    "lastVisit": "2024-12-09",
+    "totalVisits": 9
+  },
+  {
+    "Id": 7,
+    "patientId": "PAT007",
+    "name": "Amanda Davis",
+    "age": 31,
+    "gender": "Female",
+    "phone": "+1-555-0701",
+    "email": "a.davis@email.com",
+    "address": "147 Walnut Street, Springfield, IL 62707",
+    "bloodGroup": "B-",
+    "allergies": ["Sulfa drugs"],
+    "medicalHistory": "Depression, Anxiety",
+    "emergencyContact": {
+      "name": "Patricia Davis",
+      "relation": "Mother",
+      "phone": "+1-555-0702"
+    },
+    "registrationDate": "2024-04-05",
+    "status": "Active",
+    "lastVisit": "2024-12-07",
+    "totalVisits": 4
+  },
+  {
+    "Id": 8,
+    "patientId": "PAT008",
+    "name": "James Miller",
+    "age": 47,
+    "gender": "Male",
+    "phone": "+1-555-0801",
+    "email": "j.miller@email.com",
+    "address": "258 Spruce Avenue, Springfield, IL 62708",
+    "bloodGroup": "O+",
+    "allergies": [],
+    "medicalHistory": "None",
+    "emergencyContact": {
+      "name": "Susan Miller",
+      "relation": "Wife",
+      "phone": "+1-555-0802"
+    },
+    "registrationDate": "2024-05-18",
+    "status": "Active",
+    "lastVisit": "2024-12-06",
+    "totalVisits": 3
+  }
+]
